@@ -1,13 +1,13 @@
 {
-  "main.css": "/dota/static/css/main.38914f9b.chunk.css",
-  "main.js": "/dota/static/js/main.be4856a5.chunk.js",
-  "main.js.map": "/dota/static/js/main.be4856a5.chunk.js.map",
-  "static/js/1.d0a0cb61.chunk.js": "/dota/static/js/1.d0a0cb61.chunk.js",
-  "static/js/1.d0a0cb61.chunk.js.map": "/dota/static/js/1.d0a0cb61.chunk.js.map",
-  "runtime~main.js": "/dota/static/js/runtime~main.c09ce3e5.js",
-  "runtime~main.js.map": "/dota/static/js/runtime~main.c09ce3e5.js.map",
-  "static/css/main.38914f9b.chunk.css.map": "/dota/static/css/main.38914f9b.chunk.css.map",
-  "index.html": "/dota/index.html",
-  "precache-manifest.2e8d1a8c6debfa40baa19391520d5dca.js": "/dota/precache-manifest.2e8d1a8c6debfa40baa19391520d5dca.js",
-  "service-worker.js": "/dota/service-worker.js"
+  "main.css": "/dotamatches/static/css/main.38914f9b.chunk.css",
+  "main.js": "/dotamatches/static/js/main.680ccfbb.chunk.js",
+  "main.js.map": "/dotamatches/static/js/main.680ccfbb.chunk.js.map",
+  "static/js/1.80a56010.chunk.js": "/dotamatches/static/js/1.80a56010.chunk.js",
+  "static/js/1.80a56010.chunk.js.map": "/dotamatches/static/js/1.80a56010.chunk.js.map",
+  "runtime~main.js": "/dotamatches/static/js/runtime~main.e8da75ef.js",
+  "runtime~main.js.map": "/dotamatches/static/js/runtime~main.e8da75ef.js.map",
+  "static/css/main.38914f9b.chunk.css.map": "/dotamatches/static/css/main.38914f9b.chunk.css.map",
+  "index.html": "/dotamatches/index.html",
+  "precache-manifest.98c40bf0dba06c35e70fda7c777efe99.js": "/dotamatches/precache-manifest.98c40bf0dba06c35e70fda7c777efe99.js",
+  "service-worker.js": "/dotamatches/service-worker.js"
 }
