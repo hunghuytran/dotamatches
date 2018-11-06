@@ -18,3 +18,6 @@ Sorting, Filtering, Pagination and Api fetch have been implemented.
  http://localhost.com:3000
 </pre>
 </p>
+
+## Live Demo
+<a href="https://hunghuytran.github.io/dotamatches">Here</a>
