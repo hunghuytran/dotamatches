@@ -1,42 +1,8 @@
 import React, { Component } from 'react';
 import InformationBar from '../InformationBar';
 import Match from '../Match';
-import styled from 'styled-components';
 import SearchField from '../SearchField';
-
-const Subtitle = styled.h2`
-	@import url('https://fonts.googleapis.com/css?family=Spicy+Rice');
-	text-align: center;
-	font-family: 'Spicy Rice', cursive;
-	font-size: 30px;
-	margin: 0px;
-	color: #2c3e50;
-`
-
-const Title = styled.p`
-	@import url('https://fonts.googleapis.com/css?family=Spicy+Rice');
-	text-align: center;
-	font-family: 'Spicy Rice', cursive;
-	font-size: 15px;
-	margin-bottom: 0;
-	color: #7f8c8d;
-`
-
-const StyledPage = styled.div`
-	margin-top: 15px;
-	display: flex;
-	justify-content: space-evenly;
-`
-
-const Button = styled.div`
-	cursor: pointer;
-	text-align: center;
-	font-weight: bold;
-	width: 30px;
-	color: #2c3e50
-	border: 2px solid #2c3e50;
-	border-radius: 4px;
-`
+import {Title, Subtitle, StyledPage, Button} from './style.js'
 
 export default class MatchList extends Component {
 	constructor(props) {
@@ -47,14 +13,17 @@ export default class MatchList extends Component {
       		matchesPerPage: 10,
       		searchfield: '',
       		pages: [],
-      		sort: true,
-      		sortActivated: false
+      		ascending: true,
+      		activateSort: false
 		}
 		this.load = this.load.bind(this);
 		this.each = this.each.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.onSearchChange = this.onSearchChange.bind(this);
 		this.changeSort = this.changeSort.bind(this);
+		this.createPages = this.createPages.bind(this);
+		this.createFilteredMatches = this.createFilteredMatches.bind(this);
+		this.filtered = this.filtered.bind(this);
 	}
 
 	handleClick(event) {
@@ -103,8 +72,8 @@ export default class MatchList extends Component {
 
 	changeSort(event) {
 		this.setState(prevState => ({
-      		sort: !prevState.sort,
-      		sortActivated: true,
+      		ascending: !prevState.ascending,
+      		activateSort: true,
       		current: 1
     	}));
 	}
@@ -114,42 +83,41 @@ export default class MatchList extends Component {
 		current: 1 })
 	}
 
-	render() {
-		console.log(this.state)
-		var lastIndex = this.state.current * this.state.matchesPerPage;
-		var firstIndex = lastIndex - this.state.matchesPerPage;
-		var currentMatches = this.state.matches.slice(firstIndex, lastIndex);
-
-		const filteredMatches = currentMatches.filter(match =>{
+	filtered() {
+		return this.state.matches.filter(match =>{
       		return match.league_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
     	})
+	}
 
-		var sortFiltered = ''
-
-    	if(this.state.sortActivated) {
-    		if(this.state.sort) {
-    			sortFiltered = this.state.matches
-    			.filter(match =>{
-      			return match.league_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
-    			})
-    			.sort((a, b) => a.duration > b.duration)
-    			.slice(firstIndex, lastIndex)
-    		} else {
-    			sortFiltered = this.state.matches
-    			.filter(match =>{
-      			return match.league_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
-    			})
-    			.sort((a, b) => a.duration < b.duration)
-    			.slice(firstIndex, lastIndex)
-    		}
-    	}
-
+	createPages() {
 	    const pages= [];
-	    for (let i = 1; i <= Math.ceil(this.state.matches.filter(match =>{
-      		return match.league_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
-    	}).length / this.state.matchesPerPage); i++) {
+	    for (let i = 1; i <= Math.ceil(this.filtered().length / this.state.matchesPerPage); i++) {
 	    	pages.push(i);
 	    }
+	    return pages
+	}
+
+	createFilteredMatches() {
+		var lastIndex = this.state.current * this.state.matchesPerPage;
+		var firstIndex = lastIndex - this.state.matchesPerPage;
+
+		var filteredMatches = ''
+
+		if(this.state.activateSort) {
+			filteredMatches = this.state.ascending ? 
+			this.filtered().sort((a, b) => a.duration > b.duration) :
+			this.filtered().sort((a, b) => a.duration < b.duration)
+		} else {
+			filteredMatches = this.filtered();	
+		}
+
+		return filteredMatches.splice(firstIndex, lastIndex)
+	}
+
+	render() {
+		var currentMatches = this.createFilteredMatches();
+
+	    const pages= this.createPages();
 
 		return (
 			<div>
@@ -157,7 +125,7 @@ export default class MatchList extends Component {
 				<Subtitle>Matches Overview</Subtitle>
 				<SearchField onSearchChange={this.onSearchChange} />
 				<InformationBar changeSort={this.changeSort} />
-				{!this.state.sortActivated ? filteredMatches.map(this.each) : sortFiltered.map(this.each)}
+				{currentMatches.map(this.each)}
 				<StyledPage>
 				{pages.map(number => this.renderPage(number))}
 				</StyledPage>
